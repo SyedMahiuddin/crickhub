@@ -18,7 +18,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
-
         children: [
           Stack(
             children: [
