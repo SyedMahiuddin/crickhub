@@ -19,16 +19,53 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        toolbarHeight: 20,
+        toolbarHeight: 30,
         backgroundColor:  AppColors.blue.withOpacity(0.8),
-        title:  Text(
-          'Live',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 30.sp,
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic,
-          ),),
+        title:  Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 30.h,width: 28.h,
+                child: Image.asset('assets/images/img.png')),
+            SizedBox(width: 5.w,),
+            Text(
+              'Live',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 30.sp,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+              ),),
+            SizedBox(width: 5.w,),
+            Container(
+              width: 1.w,
+              height: 18.h,
+              color: Colors.white,
+            ),
+            SizedBox(width: 5.w,),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Powered By',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 8.sp,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),),
+                Text(
+                  'DevTripleS',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),),
+              ],
+            )
+          ],
+        ),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -158,24 +195,24 @@ class _HomePageState extends State<HomePage> {
                     ),),
                   SizedBox(height: 10.h,),
                   Container(
-                    height: 80.h,
+                    height: 70.h,
                     child:  ListView.builder(
                       scrollDirection: Axis.horizontal,
+                      physics: BouncingScrollPhysics(),
                       itemCount: 10, // Adjust the number of items as needed
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.only(right: 4.0),
                           child: Container(
-                            width: 120.w,
+                            width: 130.w,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.blue, // Adjust the background color as needed
                             ),
-                            padding: EdgeInsets.all(16),
-                            child: Text(
-                              'Item $index',
-                              style: TextStyle(color: Colors.white, fontSize: 18),
-                            ),
+
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.asset('assets/images/explore.png',height: 80.h, width: 130.w,fit: BoxFit.fill,)),
                           ),
                         );
                       },
@@ -192,7 +229,39 @@ class _HomePageState extends State<HomePage> {
                     ),),
                   Container(
                     height: 200.h,
-                    color: Colors.grey,
+                    color: Colors.grey.withOpacity(0.1),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 140.h,
+                          width: MediaQuery.of(context).size.width-20.w,
+                          decoration: BoxDecoration(
+                            color: Colors.blue, // Adjust the background color as needed
+                          ),
+
+                          child: Image.asset('assets/images/story.png',height: 140.h,fit: BoxFit.fill,),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width:280.w,
+                              child: Text(
+                                'Chattogram beat Platoon Chattogram won by 7 wickets (with 14 balls remaining) - Platoon vs',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.normal,
+                                ),),
+                            ),
+                            IconButton(onPressed: (){}, icon: Icon(Icons.share))
+                          ],
+                        )
+                      ],
+                    ),
 
                   ),
                   Divider(),
