@@ -39,6 +39,7 @@ dependencies:
   curved_navigation_bar: ^1.0.3
   flutter_screenutil:
   carousel_slider:
+  youtube_player_flutter:
 
 dev_dependencies:
   flutter_test:

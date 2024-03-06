@@ -3,6 +3,7 @@ import 'package:crickhub/const/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,58 +14,86 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+  final String videoURl = 'https://www.youtube.com/watch?v=D3UnvGw87zA';
+  List<String> videoUrls = [
+    'https://www.youtube.com/watch?v=0AM0gW_vBXw&ab_channel=RabbitholebdSports',
+    'https://www.youtube.com/watch?v=_JU-GMY9Zp0&ab_channel=RabbitholebdSports',
+    'https://www.youtube.com/watch?v=06mYW43iVes&ab_channel=BPL-BangladeshPremierLeague'
+  ];
+  late YoutubePlayerController _controller;
+
+
+
   @override
   Widget build(BuildContext context) {
+    String id = YoutubePlayer.convertUrlToId(videoUrls[0])!;
+    String id1 = YoutubePlayer.convertUrlToId(videoUrls[1])!;
+    String id2 = YoutubePlayer.convertUrlToId(videoUrls[2])!;
+    YoutubePlayerController controller2 =
+    YoutubePlayerController(
+        initialVideoId: _currentIndex==0?id!:_currentIndex==1?id1!:id2!,
+        flags: const YoutubePlayerFlags(
+          mute: false,
+          autoPlay: false,
+          disableDragSeek: true,
+          loop: false,
+          isLive: false,
+          forceHD: false,
+          enableCaption: false,
+        ));
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        toolbarHeight: 30,
+        toolbarHeight: 38,
         backgroundColor:  AppColors.blue.withOpacity(0.8),
-        title:  Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 30.h,width: 28.h,
-                child: Image.asset('assets/images/img.png')),
-            SizedBox(width: 5.w,),
-            Text(
-              'Live',
-              style: TextStyle(
+        title:  Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 30.h,width: 28.h,
+                  child: Image.asset('assets/images/img.png')),
+              SizedBox(width: 5.w,),
+              Text(
+                'Live',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30.sp,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),),
+              SizedBox(width: 5.w,),
+              Container(
+                width: 1.w,
+                height: 18.h,
                 color: Colors.white,
-                fontSize: 30.sp,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
-              ),),
-            SizedBox(width: 5.w,),
-            Container(
-              width: 1.w,
-              height: 18.h,
-              color: Colors.white,
-            ),
-            SizedBox(width: 5.w,),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Powered By',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 8.sp,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                  ),),
-                Text(
-                  'DevTripleS',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                  ),),
-              ],
-            )
-          ],
+              ),
+              SizedBox(width: 5.w,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Powered By',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 8.sp,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                    ),),
+                  Text(
+                    'DevTripleS',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                    ),),
+                ],
+              )
+            ],
+          ),
         ),
         elevation: 0,
       ),
@@ -74,44 +103,50 @@ class _HomePageState extends State<HomePage> {
             Stack(
               children: [
                 Container(
-                  height: 275.h,
+                  height: 260.h,
                   width: MediaQuery.of(context).size.width,
                   color: Colors.white,
 
                 ),
                 Positioned(
-                  top: 0,
+                top:0,
                   child: Container(
-                    height: 90.h,width: MediaQuery.of(context).size.width,
+                    height: 85.h,width: MediaQuery.of(context).size.width,
                     color: AppColors.blue.withOpacity(0.8),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Matches',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25.sp,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                            ),),
-                          Text(
-                            'More',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                            ),),
-                        ],
-                      ),
-                    ),
+
                   ),
                 ),
                 Positioned(
-                  top: 60.h,
+                  top: 5.h,
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Matches',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25.sp,
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                          ),),
+                        Text(
+                          'More',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                          ),),
+                      ],
+                    ),
+                ),
+                  ),),
+                Positioned(
+                  top: 30.h,
                   child: Container(
                     height: 250.h,
                    width: MediaQuery.of(context).size.width,
@@ -132,29 +167,23 @@ class _HomePageState extends State<HomePage> {
                          items: [
                          Card(
                          color: Colors.blue,
-                         child: Center(
-                           child: Text(
-                             'Container 1',
-                             style: TextStyle(color: Colors.white, fontSize: 24),
-                           ),
+                         child: ClipRRect(
+                           borderRadius: BorderRadius.circular(8),
+                           child: Image.asset('assets/images/top.jpg', fit: BoxFit.fill,)
                          ),
                        ),
                           Card(
                             color: Colors.green,
-                            child: Center(
-                              child: Text(
-                                'Container 2',
-                                style: TextStyle(color: Colors.white, fontSize: 24),
-                              ),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.asset('assets/images/top.jpg', fit: BoxFit.fill,)
                             ),
                           ),
                            Card(
                              color: Colors.green,
-                             child: Center(
-                               child: Text(
-                                 'Container 3',
-                                 style: TextStyle(color: Colors.white, fontSize: 24),
-                               ),
+                             child: ClipRRect(
+                                 borderRadius: BorderRadius.circular(8),
+                                 child: Image.asset('assets/images/top.jpg', fit: BoxFit.fill,)
                              ),
                            ),]
                   ),
@@ -228,9 +257,10 @@ class _HomePageState extends State<HomePage> {
                       fontStyle: FontStyle.italic,
                     ),),
                   Container(
-                    height: 200.h,
+                    height: 240.h,
                     color: Colors.grey.withOpacity(0.1),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           height: 140.h,
@@ -259,7 +289,32 @@ class _HomePageState extends State<HomePage> {
                             ),
                             IconButton(onPressed: (){}, icon: Icon(Icons.share))
                           ],
-                        )
+                        ),
+                        SizedBox(
+                          width:330.w,
+                          child: Text(
+                            'Chattogram Challengers ensured themselves a second crack at the BPL final by beating Dhaka Platoon in the Eliminator match',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.justify,
+                            maxLines: 2,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.normal,
+                            ),),
+                        ),
+                        Text(
+                          '1 h ago',
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.justify,
+                          maxLines: 2,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.normal,
+                          ),)
                       ],
                     ),
 
@@ -278,12 +333,70 @@ class _HomePageState extends State<HomePage> {
                             height: 90.h,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: Colors.blue, // Adjust the background color as needed
+                              color: Colors.grey.withOpacity(0.2), // Adjust the background color as needed
                             ),
-                            padding: EdgeInsets.all(16),
-                            child: Text(
-                              'Item $index',
-                              style: TextStyle(color: Colors.white, fontSize: 18),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 90.h,
+                                  width: 110.w,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(8),bottomLeft: Radius.circular(8)),
+                                    color: Colors.blue, // Adjust the background color as needed
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(8),bottomLeft: Radius.circular(8)),
+                                    child: Image.asset('assets/images/news.png',height: 90.h,fit: BoxFit.cover,
+                                      width: 110.w,),
+                                  ),
+                                ),
+                                SizedBox(width: 10.w,),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+
+                                    SizedBox(
+                                      width:200.w,
+                                      child: Text(
+                                        'Chattogram beat Platoon Chattogram won by 7 wickets (with 14 balls remaining) - Platoon vs',
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 15.sp,
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.normal,
+                                        ),),
+                                    ),
+                                    SizedBox(
+                                      width:200.w,
+                                      child: Text(
+                                        'Chattogram Challengers ensured themselves a second crack at the BPL final by beating Dhaka Platoon in the Eliminator match',
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.start,
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 15.sp,
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.normal,
+                                        ),),
+                                    ),
+                                    Text(
+                                      '1 h ago',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.justify,
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.normal,
+                                      ),)
+                                  ],
+                                )
+                              ],
                             ),
                           ),
                         );
@@ -317,28 +430,35 @@ class _HomePageState extends State<HomePage> {
                           items: [
                             Card(
                               color: Colors.blue,
-                              child: Center(
-                                child: Text(
-                                  'Container 1',
-                                  style: TextStyle(color: Colors.white, fontSize: 24),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: YoutubePlayer(
+                                  controller: controller2,
+                                  showVideoProgressIndicator:
+                                  true,
+                                  // Customize the live indicator color
                                 ),
                               ),
                             ),
                             Card(
                               color: Colors.green,
-                              child: Center(
-                                child: Text(
-                                  'Container 2',
-                                  style: TextStyle(color: Colors.white, fontSize: 24),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: YoutubePlayer(
+                                  controller: controller2,
+                                  showVideoProgressIndicator:
+                                  true, // Customize the live indicator color
                                 ),
                               ),
                             ),
                             Card(
                               color: Colors.green,
-                              child: Center(
-                                child: Text(
-                                  'Container 3',
-                                  style: TextStyle(color: Colors.white, fontSize: 24),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: YoutubePlayer(
+                                  controller: controller2,
+                                  showVideoProgressIndicator:
+                                  true, // Customize the live indicator color
                                 ),
                               ),
                             ),]
@@ -378,23 +498,25 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(height: 10.h,),
                   Container(
-                    height: 80.h,
+                    height: 70.h,
                     child:  ListView.builder(
                       scrollDirection: Axis.horizontal,
+                      physics: BouncingScrollPhysics(),
                       itemCount: 10, // Adjust the number of items as needed
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.only(right: 4.0),
                           child: Container(
-                            width: 120.w,
+                            height: 70.h,
+                            width: 130.w,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.blue, // Adjust the background color as needed
                             ),
-                            padding: EdgeInsets.all(16),
-                            child: Text(
-                              'Item $index',
-                              style: TextStyle(color: Colors.white, fontSize: 18),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.asset('assets/images/video.png',height: 70.h,fit: BoxFit.fill,
+                                width: 130.w,),
                             ),
                           ),
                         );
@@ -429,12 +551,70 @@ class _HomePageState extends State<HomePage> {
                             height: 90.h,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: Colors.blue, // Adjust the background color as needed
+                              color: Colors.grey.withOpacity(0.2), // Adjust the background color as needed
                             ),
-                            padding: EdgeInsets.all(16),
-                            child: Text(
-                              'Item $index',
-                              style: TextStyle(color: Colors.white, fontSize: 18),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 90.h,
+                                  width: 110.w,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(8),bottomLeft: Radius.circular(8)),
+                                    color: Colors.blue, // Adjust the background color as needed
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(8),bottomLeft: Radius.circular(8)),
+                                    child: Image.asset('assets/images/news.png',height: 90.h,fit: BoxFit.cover,
+                                      width: 110.w,),
+                                  ),
+                                ),
+                                SizedBox(width: 10.w,),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+
+                                    SizedBox(
+                                      width:200.w,
+                                      child: Text(
+                                        'Chattogram beat Platoon Chattogram won by 7 wickets (with 14 balls remaining) - Platoon vs',
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 15.sp,
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.normal,
+                                        ),),
+                                    ),
+                                    SizedBox(
+                                      width:200.w,
+                                      child: Text(
+                                        'Chattogram Challengers ensured themselves a second crack at the BPL final by beating Dhaka Platoon in the Eliminator match',
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.start,
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 15.sp,
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.normal,
+                                        ),),
+                                    ),
+                                    Text(
+                                      '1 h ago',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.justify,
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.normal,
+                                      ),)
+                                  ],
+                                )
+                              ],
                             ),
                           ),
                         );
